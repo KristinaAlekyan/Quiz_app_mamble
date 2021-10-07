@@ -53,7 +53,7 @@ class Quiz extends Component {
                 {step <= Object.keys(questions).length ? 
                     (<>
                         <h1>Quiz Title-Example </h1>  
-                        <ProgressBar className = 'bar' now={0}/>
+                        <ProgressBar className = 'bar' now={100*(step-1)/Object.keys(questions).length}/>
 
                         <h2>Question {step}</h2>
                         <Question
