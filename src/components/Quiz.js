@@ -4,46 +4,24 @@ import Answer from './answer/Answer';
 import './Quiz.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {ProgressBar} from 'react-bootstrap';
+import Data from '../Quiz.json';
 
 
 class Quiz extends Component {
-    
-    state = {
-        questions: {
-            1: '1+1',
-            2: '1*0',
-            3: '1/1'
-        },
-        answers: {
-            1: {
-                1: '0',
-                2: '1',
-                3: '2'
-            },
-            2: {
-                1: '0',
-                2: '1',
-                3: '2'
-            },
-            3: {
-                1: '0',
-                2: '1',
-                3: '2'
-            },
-        },
-        correctAnswers: {
-            1: '3',
-            2: '1',
-            3: '2'
-        },
-        correctAnswer: 0,
-        clickedAnswer: 0,
-        step: 1,
-        score: 0, 
+    constructor(prop){
+        super(prop)
+        this.state = {
+            data: JSON.parse(JSON.stringify(Data)), 
+            correctAnswer: 0,
+            clickedAnswer: 0,
+            step: 1,
+            score: 0, 
+        }
     }
 
-    checkAnswer = answer => {
-        const { correctAnswers, step, score } = this.state;
+    checkAnswer = answer => {  
+        const {correctAnswers} = this.state.data; 
+        const { step, score } = this.state;
         if(answer === correctAnswers[step]){
             this.setState({
                 score: score + 1,
@@ -66,24 +44,16 @@ class Quiz extends Component {
         });
     }
    
-   /* nextProgressStep = (progressStep) => {
-        this.setState({
-            progressStep: progressStep + 1,
-        });
-    }
-    */
-
-
     render(){
-        let { questions, answers, correctAnswer, clickedAnswer, step, score } = this.state;
-        let progressStep = 100/(Object.keys(this.state.questions)).length;
+        const { questions, answers} = this.state.data;
+        const { correctAnswer, clickedAnswer, step, score } = this.state;
         
         return(
             <div className="Content">
                 {step <= Object.keys(questions).length ? 
                     (<>
-                        <h1>Quiz Title-Example </h1>
-                        <ProgressBar className = 'bar'now={progressStep}/>
+                        <h1>Quiz Title-Example </h1>  
+                        <ProgressBar className = 'bar' now={0}/>
 
                         <h2>Question {step}</h2>
                         <Question
